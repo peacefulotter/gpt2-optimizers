@@ -23,9 +23,7 @@ import distributed
 def get_args():
     parser = argparse.ArgumentParser(allow_abbrev=False)
     parser.add_argument('--config_format', default='base', choices=config.registered_formats())
-
     args, rem_args = parser.parse_known_args()
-
     return config.parse_args_with_format(format=args.config_format, base_parser=parser, args=rem_args, namespace=args)
 
 
@@ -87,14 +85,20 @@ def main(args):
         extra_args = dict(fused=True) if use_fused else dict()
         opt = torch.optim.AdamW(group_specs, lr=args.lr, betas=(args.beta1, args.beta2),
                                 weight_decay=args.weight_decay, **extra_args)
-    elif 'signsgd':
-        opt = SignSGD(group_specs, lr=args.lr, momentum=0.9, weight_decay=args.weight_decay)
-    elif 'sophia':
-        opt = Sophia(group_specs, lr=args.lr, momentum=0.9, weight_decay=args.weight_decay)
-    elif 'lion':
-        opt = Lion(group_specs, lr=args.lr, momentum=0.9, weight_decay=args.weight_decay)
-    elif 'sgd':
+    elif args.opt == 'signsgd':
+        opt = SignSGD(group_specs, lr=args.lr)
+    elif args.opt == 'sophia':
+        opt = Sophia(group_specs, lr=args.lr, rho=0.03, weight_decay=args.weight_decay)
+    elif args.opt == 'lion':
+        opt = Lion(group_specs, lr=args.lr, weight_decay=args.weight_decay)
+    elif args.opt == 'sgd':
+        opt = torch.optim.SGD(group_specs, lr=args.lr, momentum=0, weight_decay=args.weight_decay)
+    elif args.opt == 'sgd-momentum':
         opt = torch.optim.SGD(group_specs, lr=args.lr, momentum=0.9, weight_decay=args.weight_decay)
+    else:
+        raise NotImplementedError('Unknown optimizer')
+
+    print('Using optimizer', opt.__class__.__name__)
     
     if args.scheduler != 'none':
         if args.scheduler in ['cos', 'linear']:

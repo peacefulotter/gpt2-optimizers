@@ -1,5 +1,6 @@
 from contextlib import nullcontext
 
+import os
 import torch
 import torch.nn.functional as F
 import wandb
@@ -67,6 +68,16 @@ def train_base(model, opt, data, scheduler, iterations, acc_steps, batch_size, s
                 if scheduler is not None:
                     print_string += f" [lr] {current_lr:.5f}"
                 print(print_string)
+
+                if distributed_backend.is_master_process():
+                    save_path = os.path.join(ckpt_path, '{itr}')
+                    print(f"saving checkpoint to {save_path}")
+                    save_checkpoint(distributed_backend=distributed_backend,
+                                    model=model,
+                                    opt=opt,
+                                    scheduler=scheduler,
+                                    itr=itr,
+                                    ckpt_path=save_path)
 
                 if extra_args.wandb:
                     wandb.log({
