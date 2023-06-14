@@ -14,6 +14,9 @@ from models.utils import get_model
 from data.utils import get_dataset
 from optim.base import train_base
 from optim.sparse import train_sparse
+from optim.lion import Lion
+from optim.sophia import SophiaG as Sophia
+from optim.signsgd import SignSGD
 import distributed
 
 
@@ -84,7 +87,13 @@ def main(args):
         extra_args = dict(fused=True) if use_fused else dict()
         opt = torch.optim.AdamW(group_specs, lr=args.lr, betas=(args.beta1, args.beta2),
                                 weight_decay=args.weight_decay, **extra_args)
-    else:
+    elif 'signsgd':
+        opt = SignSGD(group_specs, lr=args.lr, momentum=0.9, weight_decay=args.weight_decay)
+    elif 'sophia':
+        opt = Sophia(group_specs, lr=args.lr, momentum=0.9, weight_decay=args.weight_decay)
+    elif 'lion':
+        opt = Lion(group_specs, lr=args.lr, momentum=0.9, weight_decay=args.weight_decay)
+    elif 'sgd':
         opt = torch.optim.SGD(group_specs, lr=args.lr, momentum=0.9, weight_decay=args.weight_decay)
     
     if args.scheduler != 'none':

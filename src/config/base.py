@@ -17,7 +17,7 @@ def parse_args(base_parser, args, namespace):
     parser.add_argument('--beta1', default=0.9, type=float)
     parser.add_argument('--beta2', default=0.95, type=float)
     parser.add_argument('--scheduler', default='cos', choices=['linear', 'cos', 'none'])
-    parser.add_argument('--opt', default='adamw', choices=['adamw', 'sgd'])
+    parser.add_argument('--opt', default='adamw', choices=['adamw', 'sgd', 'lion', 'sophia', 'signsgd'])
     parser.add_argument('--eval_freq', default=200, type=int) # in iterations
     parser.add_argument('--results_base_folder', default="./exps", type=str) 
     parser.add_argument('--grad_clip', default=0.0, type=float) # default value is 1.0 in NanoGPT

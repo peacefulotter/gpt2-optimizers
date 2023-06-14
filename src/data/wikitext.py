@@ -25,7 +25,10 @@ def get_wikitext_data():
         with open(os.path.join(WIKITEXT_DATA_PATH, "wikitext-103-raw/wiki.valid.raw"), 'r') as data_file:
             raw_eval_data = data_file.read()
 
+        print('Finished downloading')
+
         tokenizer = tiktoken.get_encoding("gpt2")
+        print(tokenizer)
         raw_tokenized_train = tokenizer.encode_ordinary(raw_train_data)
         raw_tokenized_eval = tokenizer.encode_ordinary(raw_eval_data)
 

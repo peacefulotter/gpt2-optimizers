@@ -5,6 +5,7 @@ import torch.nn.functional as F
 import wandb
 import time 
 import copy
+from tqdm import tqdm
 
 from .utils import eval, get_batch, save_checkpoint
 
@@ -26,7 +27,12 @@ def train_base(model, opt, data, scheduler, iterations, acc_steps, batch_size, s
     model.train()
 
     t0 = time.time()
-    while itr < iterations:
+
+    def generator():
+        while itr < iterations:
+            yield
+
+    for _ in tqdm(generator()):
         for microstep_idx in range(acc_steps):  # gradient accumulation
             x, y = get_batch(data['train'], sequence_length, batch_size, device=extra_args.device)
             with type_ctx:
