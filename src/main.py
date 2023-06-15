@@ -93,7 +93,7 @@ def main(args):
         opt = Lion(group_specs, lr=args.lr, weight_decay=args.weight_decay)
     elif args.opt == 'sgd':
         opt = torch.optim.SGD(group_specs, lr=args.lr, momentum=0, weight_decay=args.weight_decay)
-    elif args.opt == 'sgd-momentum':
+    elif args.opt == 'sgd-mom':
         opt = torch.optim.SGD(group_specs, lr=args.lr, momentum=0.9, weight_decay=args.weight_decay)
     else:
         raise NotImplementedError('Unknown optimizer')
