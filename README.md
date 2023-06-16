@@ -3,7 +3,7 @@
 
 #### Code structure
 - huggingface: Attempt to run GPT2 using huggingface packages, did not work in the end
-  - Quickstart: `python ./huggingface/train.py {model} {dataset} {optimizer}`
+  - Quickstart: first train the tokenizer and use it to tokenize the dataset `python ./huggingface/tokenizer.py {model} {dataset}`. Then train the model `python ./huggingface/train.py {model} {dataset} {optimizer}`
 - llm-baselines: Code for the "Exploring Optimizers on Causal Language Models" report
   - `src/config/` Arguments for training scripts
   - `src/data/` Functions to download and tokenize famous datasets such as openwebtext, wikitext, shakespeare, and more
