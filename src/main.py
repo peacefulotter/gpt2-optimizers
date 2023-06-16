@@ -88,7 +88,7 @@ def main(args):
     elif args.opt == 'signsgd':
         opt = SignSGD(group_specs, lr=args.lr)
     elif args.opt == 'sophia':
-        opt = Sophia(group_specs, lr=args.lr, rho=0.03, weight_decay=args.weight_decay)
+        opt = Sophia(group_specs, lr=args.lr, rho=20, weight_decay=args.weight_decay)
     elif args.opt == 'lion':
         opt = Lion(group_specs, lr=args.lr, weight_decay=args.weight_decay)
     elif args.opt == 'sgd':
