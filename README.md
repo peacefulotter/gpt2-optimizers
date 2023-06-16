@@ -1,4 +1,5 @@
-# optml-project
+# gpt2-optimizers
+### CS-439 Optimization for Machine Learning
 
 #### Code structure
 - huggingface: Attempt to run GPT2 using huggingface packages, did not work in the end
