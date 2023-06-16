@@ -12,4 +12,8 @@
   - `src/main.py` Training file that parses the arguments, downloads the dataset, instantiate the model and starts training 
 
 
+#### Scripts
+Scripts to run the experiments can be found under `llm-baselines/scripts/`. Many parameters are available, a list can be found under `./llm-baselines/src/config/base.py`.
+
+
 For more infos, see `llm-baselines/README.md`
